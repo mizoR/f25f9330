@@ -21,9 +21,9 @@ module BlockchainStudy
     end
 
     get '/blocks' do
-      @blocks = blockchain.blocks
+      blocks = blockchain.blocks
 
-      json @blocks.map(&:as_json)
+      json blocks.map(&:as_json)
     end
 
     post '/blocks' do
@@ -35,7 +35,13 @@ module BlockchainStudy
     end
 
     post '/transactions' do
-      raise NotImplementedError
+      params = JSON.parse(request.body.read, symbolize_names: true)
+
+      transaction_params = params.slice(:sender, :recipient, :amount)
+
+      transaction = blockchain.current_transactions.create(transaction_params)
+
+      json transaction.as_json
     end
 
     put '/nodes' do
