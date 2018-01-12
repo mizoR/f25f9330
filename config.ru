@@ -4,4 +4,4 @@ end
 
 require __dir__ + '/app'
 
-run Sinatra::Application
+run BlockchainStudy::App

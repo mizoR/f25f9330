@@ -1,34 +1,45 @@
 require 'sinatra'
 require 'sinatra/json'
 
-blockchain = begin
-               genesis = Block.new(proof: 100, previous_hash: 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx')
+module BlockchainStudy
+  class App < Sinatra::Base
 
-               Blockchain.new(genesis: genesis)
-             end
+    @@blockchain = begin
+      genesis = Block.new(proof: 100, previous_hash: 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx')
 
-get '/' do
-  'Blockchain study'
-end
+      Blockchain.new(genesis: genesis)
+    end
 
-get '/blocks' do
-  @blocks = blockchain.blocks
+    helpers do
+      def blockchain
+        @@blockchain
+      end
+    end
 
-  json @blocks.map(&:as_json)
-end
+    get '/' do
+      'Blockchain study'
+    end
 
-post '/blocks' do
-  raise NotImplementedError
-end
+    get '/blocks' do
+      @blocks = blockchain.blocks
 
-put '/blocks' do
-  raise NotImplementedError
-end
+      json @blocks.map(&:as_json)
+    end
 
-post '/transactions' do
-  raise NotImplementedError
-end
+    post '/blocks' do
+      raise NotImplementedError
+    end
 
-put '/nodes' do
-  raise NotImplementedError
+    put '/blocks' do
+      raise NotImplementedError
+    end
+
+    post '/transactions' do
+      raise NotImplementedError
+    end
+
+    put '/nodes' do
+      raise NotImplementedError
+    end
+  end
 end
