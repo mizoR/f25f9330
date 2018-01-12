@@ -1,11 +1,20 @@
 require 'sinatra'
+require 'sinatra/json'
+
+blockchain = begin
+               genesis = Block.new(proof: 100, previous_hash: 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx')
+
+               Blockchain.new(genesis: genesis)
+             end
 
 get '/' do
   'Blockchain study'
 end
 
 get '/blocks' do
-  raise NotImplementedError
+  @blocks = blockchain.blocks
+
+  json @blocks.map(&:as_json)
 end
 
 post '/blocks' do
