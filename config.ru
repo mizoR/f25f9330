@@ -4,4 +4,6 @@ end
 
 require __dir__ + '/app'
 
+ENV['BLOCKCHAIN_MINER_ADDRESS'] ||= SecureRandom.uuid
+
 run BlockchainStudy::App
